@@ -1,8 +1,7 @@
 var createObject, extendObject,
-  sayHello, sayText, makeMammal,
-  catPrototype, makeCat, garfieldCat,
-  dogPrototype, makeDog, cliffordDog,
-  humanPrototype, makeHuman, ryanHuman;
+  sayHello, makeConveyance,
+  automobilePrototype, makeAutomobile, chargerAutomobile,
+  airplanePrototype, makeAirplane, cessnaAirplane, raptorAirplane;
 // ** Utility function to set inheritance
 // Cross-browser method to inherit Object.create()
 // Newer js engines (v1.8.5+) support it natively
@@ -27,96 +26,79 @@ extendObject = function ( orig_obj, ext_obj ) {
 
 // ** object methods...
 sayHello = function () {
-  print( this.hello_text + ' says ' + this.name );
+  print( 'I am a ' + this.manufacturer + 
+		 ' ' + this.model + ' and i go ' + this.make_sound );
   };
 
-sayText = function ( text ) {
-  print( this.name + ' says ' + text );
-  };
-
-// ** makeMammal constructor
-makeMammal = function ( arg_map ) {
-  var mammal = {
-    is_warm_blooded : true,
-    has_fur : true,
-    leg_count : 4,
-    has_live_birth : true,
-    hello_text : 'grunt',
-    name : 'anonymous',
-    say_hello : sayHello,
-    say_text : sayText
+// ** makeconveyance constructor
+makeConveyance = function ( arg_map ) {
+  var vehicle = {
+    is_propelled : true,
+    occupancy_count : 1,
+    is_still_made : true,
+    manufacturer : 'anonymous',
+    model : 'anonymous',
+    say_hello : sayHello
     };
-  extendObject( mammal, arg_map );
-  return mammal;
+  extendObject( vehicle, arg_map );
+  return vehicle;
   };
 
-// ** use mammal constructor to create cat prototype
-catPrototype = makeMammal({
-  has_whiskers : true,
-  hello_text : 'meow'
+// ** use automobile constructor to create car prototype
+automobilePrototype = makeConveyance({
+  is_land_based : true,
+  make_sound : 'vroom'
   });
 
-// base prototype for all dogs
-dogPrototype = makeMammal({
-  has_claws : true,
-  hello_text : 'bark'
+// base prototype for all planes
+airplanePrototype = makeConveyance({
+  is_land_based : false,
+  make_sound : 'woosh'
   });
 
-// prototype for all humans
-humanPrototype = makeMammal({
-  leg_count : 2,
-  arm_count : 2,
-  hello_text : 'hello'
-  });
-
-// ** cat constructor
-makeCat = function( arg_map ) {
-  var cat = Object.create( catPrototype );
-  extendObject( cat, arg_map );
-  return cat;
+// ** automobile constructor
+makeAutomobile = function( arg_map ) {
+  var automobile = Object.create( automobilePrototype );
+  extendObject( automobile, arg_map );
+  return automobile;
   };
 
-// dog constructer
-makeDog = function( arg_map ) {
-  var dog = Object.create( dogPrototype );
-  extendObject( dog, arg_map );
-  return dog;
-  };
-
-// human constructor
-makeHuman = function( arg_map ) {
-  var human = Object.create( humanPrototype );
-  extendObject( human, arg_map );
-  return human;
+// airplane constructer
+makeAirplane = function( arg_map ) {
+  var airplane = Object.create( airplanePrototype );
+  extendObject( airplane, arg_map );
+  return airplane;
   };
 
 // ** cat instance
-garfieldCat = makeCat({
-  name : 'Garfield',
-  weight_lbs : 8.6
+chargerAutomobile = makeAutomobile({
+  manufacturer : 'Dodge',
+  model : 'Charger',
+  occupancy_count : 4,
+  year : 1969
   });
 
 // make a new instance of a dog
-cliffordDog = makeDog({
-  name : 'Clifford',
-  fur_color : 'red'
+cessnaAirplane = makeAirplane({
+  manufacturer : 'Cessna',
+  model : '182D',
+  year : 2016,
+  occupancy_count : 4
   });
 
 // make new instance of human aka ME
-ryanHuman = makeHuman({
-  name : 'Ryan Postma',
-  human_age : 20
+raptorAirplane = makeAirplane({
+  manufacturer : 'Lockheed Martin',
+  model : 'F-22 Raptor',
+  year : 1997
   });
 
 // ** cat instance method invocations
-garfieldCat.say_hello();
-garfieldCat.say_text('Purr...');
+chargerAutomobile.say_hello();
 
 // test new dog
-cliffordDog.say_hello();
-cliffordDog.say_text('Woof!!!');
+cessnaAirplane.say_hello();
 
 // test for new human instance
-ryanHuman.say_hello();
-ryanHuman.say_text('I am the man, the myth, and the legend!');
+raptorAirplane.say_hello();
 
